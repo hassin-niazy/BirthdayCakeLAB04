@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
+import android.view.View;
+
+import androidx.annotation.Nullable;
 
 public class CakeView extends SurfaceView {
 
@@ -16,6 +19,8 @@ public class CakeView extends SurfaceView {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
+
+    private CakeModel cakeModel = new CakeModel();
 
     /* These constants define the dimensions of the cake.  While defining constants for things
         like this is good practice, we could be calculating these better by detecting
@@ -37,7 +42,7 @@ public class CakeView extends SurfaceView {
 
 
     /**
-     * ctor must be overridden here as per standard Java inheritance practice.  We need it
+     * Actor must be overridden here as per standard Java inheritance practice.  We need it
      * anyway to initialize the member variables
      */
     public CakeView(Context context, AttributeSet attrs) {
@@ -69,29 +74,33 @@ public class CakeView extends SurfaceView {
      * the position of the bottom left corner of the candle
      */
     public void drawCandle(Canvas canvas, float left, float bottom) {
-        canvas.drawRect(left, bottom - candleHeight, left + candleWidth, bottom, candlePaint);
 
-        //draw the outer flame
-        float flameCenterX = left + candleWidth/2;
-        float flameCenterY = bottom - wickHeight - candleHeight - outerFlameRadius/3;
-        canvas.drawCircle(flameCenterX, flameCenterY, outerFlameRadius, outerFlamePaint);
 
-        //draw the inner flame
-        flameCenterY += outerFlameRadius/3;
-        canvas.drawCircle(flameCenterX, flameCenterY, innerFlameRadius, innerFlamePaint);
+        if (getCakeModel().candlesWick) {
+            canvas.drawRect(left, bottom - candleHeight, left + candleWidth, bottom, candlePaint);
+            if (getCakeModel().isCandleLit) {
+                //draw the outer flame
+                float flameCenterX = left + candleWidth / 2;
+                float flameCenterY = bottom - wickHeight - candleHeight - outerFlameRadius / 3;
+                canvas.drawCircle(flameCenterX, flameCenterY, outerFlameRadius, outerFlamePaint);
 
-        //draw the wick
-        float wickLeft = left + candleWidth/2 - wickWidth/2;
-        float wickTop = bottom - wickHeight - candleHeight;
-        canvas.drawRect(wickLeft, wickTop, wickLeft + wickWidth, wickTop + wickHeight, wickPaint);
+                //draw the inner flame
+                flameCenterY += outerFlameRadius / 3;
+                canvas.drawCircle(flameCenterX, flameCenterY, innerFlameRadius, innerFlamePaint);
+            }
+            //draw the wick
+            float wickLeft = left + candleWidth/2 - wickWidth/2;
+            float wickTop = bottom - wickHeight - candleHeight;
+            canvas.drawRect(wickLeft, wickTop, wickLeft + wickWidth, wickTop + wickHeight, wickPaint);
+        }
+
 
     }
 
     /**
      * onDraw is like "paint" in a regular Java program.  While a Canvas is
      * conceptually similar to a Graphics in javax.swing, the implementation has
-     * many subtle differences.  Show care and read the documentation.
-     *
+     * many subtle differences.  Show care and read the documentation.*
      * This method will draw a birthday cake
      */
     @Override
@@ -120,9 +129,21 @@ public class CakeView extends SurfaceView {
         canvas.drawRect(cakeLeft, top, cakeLeft + cakeWidth, bottom, cakePaint);
 
         //Now a candle in the center
-        drawCandle(canvas, cakeLeft + cakeWidth/2 - candleWidth/2, cakeTop);
+        for (int i = 1 ; i <= getCakeModel().numCandles; i++) {
+          //  drawCandle(canvas, cakeLeft + cakeWidth / 4 - candleWidth / 2, cakeTop);
+             drawCandle(canvas, cakeLeft + cakeWidth / 7*i + cakeLeft - candleWidth / 9*i, cakeTop);
+
+           // drawCandle(canvas, cakeWidth/i, cakeTop);
+           // drawCandle(canvas, cakeLeft + cakeWidth/i, cakeTop );
+        }
 
     }//onDraw
+
+
+    public CakeModel getCakeModel() {
+        return cakeModel;
+    }
+
 
 }//class CakeView
 
