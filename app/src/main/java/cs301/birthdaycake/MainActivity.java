@@ -2,6 +2,7 @@ package cs301.birthdaycake;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.method.Touch;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
         SeekBar seek = findViewById(R.id.candleSeekBar);
         seek.setOnSeekBarChangeListener(cakeCtrl);
+
+        CakeByID.setOnTouchListener(cakeCtrl);
 
     }
     public void goodbye(View button)
