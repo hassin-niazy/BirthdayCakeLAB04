@@ -23,8 +23,6 @@ public class CakeView extends SurfaceView {
     Paint redSquare = new Paint();
     Paint balloonPaint = new Paint();
 
-    Paint red = new Paint();
-
     private CakeModel cakeModel = new CakeModel();
 
     /* These constants define the dimensions of the cake.  While defining constants for things
@@ -44,7 +42,7 @@ public class CakeView extends SurfaceView {
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
 
-
+    
 
     /**
      * Actor must be overridden here as per standard Java inheritance practice.  We need it
@@ -62,6 +60,8 @@ public class CakeView extends SurfaceView {
         frostingPaint.setColor(0xFFFFFACD);  //pale yellow
         frostingPaint.setStyle(Paint.Style.FILL);
         candlePaint.setColor(0xFF32CD32);  //lime green
+        redSquare.setColor(0xFFFF0000);
+        balloonPaint.setColor(0xFF0000FF); // really angry blue
         candlePaint.setStyle(Paint.Style.FILL);
         outerFlamePaint.setColor(0xFFFFD700);  //gold yellow
         outerFlamePaint.setStyle(Paint.Style.FILL);
@@ -141,6 +141,13 @@ public class CakeView extends SurfaceView {
            // drawCandle(canvas, cakeWidth/i, cakeTop);
            // drawCandle(canvas, cakeLeft + cakeWidth/i, cakeTop );
         }
+
+        canvas.drawRect(((float) cakeModel.x), ((float) cakeModel.y),(((float) cakeModel.x) - 30), (((float) cakeModel.y)+45), redSquare);
+        canvas.drawRect(((float) cakeModel.x), ((float) cakeModel.y),(((float) cakeModel.x) + 30), (((float) cakeModel.y)-45), redSquare);
+        canvas.drawRect(((float) cakeModel.x), ((float) cakeModel.y),(((float) cakeModel.x)-30), (((float) cakeModel.y)-45), candlePaint);
+        canvas.drawRect(((float) cakeModel.x), ((float) cakeModel.y),(((float) cakeModel.x) + 30), (((float) cakeModel.y)+45), candlePaint);
+        canvas.drawOval(((float) cakeModel.x)-20, ((float) cakeModel.y)-30,(((float) cakeModel.x) + 30), (((float) cakeModel.y)+45), balloonPaint);
+        canvas.drawLine(((float) cakeModel.x)+7, ((float) cakeModel.y+40), ((float) cakeModel.x)+7, ((float) cakeModel.y)+80 , cakePaint);
 
     }//onDraw
 
