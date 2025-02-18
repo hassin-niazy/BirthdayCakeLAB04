@@ -6,4 +6,8 @@ public class CakeModel {
      public boolean frosting = true;
      public boolean candlesWick = true;
 
+     public int x;
+
+     public int y;
+
 }
