@@ -149,12 +149,15 @@ public class CakeView extends SurfaceView {
         canvas.drawOval(((float) cakeModel.x)-20, ((float) cakeModel.y)-30,(((float) cakeModel.x) + 30), (((float) cakeModel.y)+45), balloonPaint);
         canvas.drawLine(((float) cakeModel.x)+7, ((float) cakeModel.y+40), ((float) cakeModel.x)+7, ((float) cakeModel.y)+80 , cakePaint);
 
+        canvas.drawText("x: " + cakeModel.x + " y: " +cakeModel.y,);
+
     }//onDraw
 
 
     public CakeModel getCakeModel() {
         return cakeModel;
     }
+
 
 
 }//class CakeView
